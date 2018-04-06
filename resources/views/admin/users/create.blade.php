@@ -3,16 +3,42 @@
 @section('content')
     <h1>Create User</h1>
 
-    {!! Form::open(['method'=>'POST','action'=>'AdminUsersController@store']) !!}
-
+    {!! Form::open(['method'=>'POST','action'=>'AdminUsersController@store','file'=>true]) !!}
+    {{csrf_field()}}
         <div class="form-group">
             {!! Form::label('name','Name:') !!}
             {!! Form::text('name',null,['class'=>'form-control']) !!}
         </div>
+
+        <div class="form-group">
+            {!! Form::label('email','E-mail:') !!}
+            {!! Form::email('email',null,['class'=>'form-control']) !!}
+        </div>
+
+        <div class="form-group">
+            {!! Form::label('is_active','Status:') !!}
+            {!! Form::select('is_active', [0 => 'Not Active', 1 => 'Active'], 0,['class'=>'form-control']) !!}
+        </div>
+
+        <div class="form-group">
+            {!! Form::label('role_id','Role:') !!}
+            {!! Form::select('role_id',[''=>'Choose Options'] + $roles,null,['class'=>'form-control']) !!}
+        </div>
+
+        <div class="form-group">
+            {!! Form::file('file') !!}
+        </div>
+
+        <div class="form-group">
+            {!! Form::label('password','Password:') !!}
+            {!! Form::password('password',['class'=>'form-control']) !!}
+        </div>
+
         {!! Form::submit('Create User',['class'=>'btn btn-primary']) !!}
-        {{csrf_field()}}
+
 
     {!! Form::close() !!}
 
+    @include('includes.form_error')
 
     @endsection
